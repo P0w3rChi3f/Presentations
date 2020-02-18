@@ -1,8 +1,8 @@
 ﻿# Verify users and groups
 
-Get-ADUser -filter 'name -like "JEA*"'
-Get-ADGroupMember -Identity "Domain Admins"
-Get-ADGroupMember "Domain Users"
+Get-ADUser -filter 'name -like "JEA*"' | Select-Object name
+Get-ADGroupMember -Identity "Domain Admins" | Select-Object name
+Get-ADGroupMember "Domain Users" | Select-Object name
 
 #test remote sessions
 Enter-PSSession -ComputerName JEA-DEMOSVR -Credential (Get-Credential)
@@ -19,7 +19,7 @@ New-Item -ItemType directory -Path 'C:\JEAConfigs\Modules\BsidesJEA' -Name RoleC
 #create a role capability file
 New-PSRoleCapabilityFile -Path 'C:\JEAConfigs\Modules\BsidesJEA\RoleCapabilities\Developer.psrc'
 ise 'C:\JEAConfigs\Modules\BsidesJEA\RoleCapabilities\Developer.psrc'
-ise 'C:\JEA-DemoFiles\RoleCapabilities\Developer.psrc'
+ise 'C:\JEAConfigs\JEA-DemoFiles\RoleCapabilities\Developer.psrc'
 
 New-PSRoleCapabilityFile -Path 'C:\JEAConfigs\Modules\BsidesJEA\RoleCapabilities\Contractors.psrc'
 ise 'C:\JEAConfigs\Modules\BsidesJEA\RoleCapabilities\Contractors.psrc'

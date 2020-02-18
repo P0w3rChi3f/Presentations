@@ -25,6 +25,11 @@ install-addsforest -Domainname
 
 Add-Computer -DomainName jeademo.local
 
+# Create OU structure
+# DemoLab
+    # Users
+    # Groups
+    # Computers
 
 #create users
 
@@ -34,8 +39,17 @@ foreach ($user in $DomainUsers) {
     New-ADUser -SamAccountName ($user).SamAccountName -Name ($user) -AccountPassword (ConvertTo-SecureString -AsPlainText "Password12#$" -Force) -Enabled $true -path "OU=Users,OU=DemoLAB,DC=JEADemo,DC=local"
 
 
-
+# add logon with period beween fname and last name
     }# Close foreach loop
+
+
+# Create Computers
+    # ou=Computers,OU=DemoLab,DC=JEADemo,DC=local
+    # Jea-DC
+    # Jea-DemoSvr
+    # JeaClient - add: C:\JEA-DemoFiles\RoleCapabilities\Developer.psrc; C:\JEAConfigs\JEA-DemoFiles\RoleCapabilities\Developer.psrc;  
+
+
 
 
 
