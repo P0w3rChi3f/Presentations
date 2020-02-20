@@ -86,7 +86,18 @@ whoami
 restart-computer
 Restart-Computer -force
 
+##################################################################################################
+# Reset WinRM Walk Through
 
+Invoke-Command -ComputerName JEA-DemoSVR -ScriptBlock { 
+    Unregister-PSSessionConfiguration -Name BSidesDemo  
+
+    Remove-Item -path 'c:\Program Files\WindowsPowerShell\Modules\BSidesJEA' -Recurse -Force
+
+    Restart-Service -Name WinRM -Force
+
+    Get-PSSessionConfiguration | Select-Object name,permission 
+} -Credential jeademo\jea.admin
 
 
 
