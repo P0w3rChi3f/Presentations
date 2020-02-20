@@ -29,6 +29,8 @@ Add-Computer -DomainName jeademo.local
 # DemoLab
     # Users
     # Groups
+        # jea_contractors
+        # jea_developers
     # Computers
 
 #create users
