@@ -7,7 +7,7 @@ Get-ADGroupMember "Domain Users" | Select-Object name
 #test remote sessions
 Enter-PSSession -ComputerName JEA-DEMOSVR -Credential (Get-Credential)
 
-get-command *
+get-command * | Group-Object CommandType
 
 Exit-PSSession
 
@@ -23,7 +23,7 @@ ise 'C:\JEAConfigs\JEA-DemoFiles\RoleCapabilities\Developer.psrc'
 
 New-PSRoleCapabilityFile -Path 'C:\JEAConfigs\Modules\BsidesJEA\RoleCapabilities\Contractors.psrc'
 ise 'C:\JEAConfigs\Modules\BsidesJEA\RoleCapabilities\Contractors.psrc'
-ise 'C:\JEAConfigs\JEA-DemoFiles\RoleCapabilities\Developer.psrc'
+ise 'C:\JEAConfigs\JEA-DemoFiles\RoleCapabilities\Contractors.psrc'
 
 #create a session config file
 New-PSSessionConfigurationFile -Path 'C:\JEAConfigs\Modules\BsidesJEA\RestrictedSession.pssc' `
@@ -37,19 +37,30 @@ New-PSSessionConfigurationFile -Path 'C:\JEAConfigs\Modules\BsidesJEA\Restricted
 
 # Copy pre-made files to server
 Copy-Item -Path 'C:\JEAConfigs\JEA-DemoFiles\RoleCapabilities\Developer.psrc' -Destination 'C:\JEAConfigs\Modules\BsidesJEA\RoleCapabilities\Developer.psrc' -Force
-Copy-Item -Path 'C:\JEAConfigs\JEA-DemoFiles\RoleCapabilities\Developer.psrc' -Destination 'C:\JEAConfigs\Modules\BsidesJEA\RoleCapabilities\Contractors.psrc' -Force
+Copy-Item -Path 'C:\JEAConfigs\JEA-DemoFiles\RoleCapabilities\Contractors.psrc' -Destination 'C:\JEAConfigs\Modules\BsidesJEA\RoleCapabilities\Contractors.psrc' -Force
+
+Enter-PSSession -ComputerName JEA-DemoSVR -Credential jeademo\jea.Admin
+cd 'C:\Program Files\WindowsPowerShell\Modules\'
+Exit-PSSession
 
 $DemoSVRSession = New-PSSession -ComputerName Jea-DemoSVR -Credential 'jeademo\jea.admin'
 Copy-Item -Path 'C:\JEAConfigs\Modules\BSidesJEA' -Destination 'c:\Program Files\WindowsPowerShell\Modules\BSidesJEA' -ToSession $DemoSVRSession -Recurse
 
+
 #Register the EndPoint - 
-Enter-PSSession -ComputerName JEA-DemoSVR
+
+Enter-PSSession -ComputerName JEA-DemoSVR -Credential jeademo\jea.Admin
+cd 'C:\Program Files\WindowsPowerShell\Modules\'
+Get-PSSessionConfiguration | Select-Object name
+Exit-PSSession
 
 Invoke-Command -ComputerName JEA-DemoSVR -ScriptBlock { Unregister-PSSessionConfiguration -Name BSidesDemo }
 Invoke-Command -ComputerName JEA-DemoSVR -ScriptBlock { Register-PSSessionConfiguration -Name BSidesDemo -Path 'C:\Program Files\WindowsPowerShell\Modules\BSidesJEA\RestrictedSession.pssc' }
 
 # Restart WinRM Service on remote computer
-Exit-PSSession 
+Enter-PSSession -ComputerName JEA-DemoSVR -Credential jeademo\jea.Admin
+Get-PSSessionConfiguration | Select-Object name
+Exit-PSSession
 
 Invoke-Command -ComputerName JEA-DemoSVR -ScriptBlock { Restart-Service -Name WinRM }
 Invoke-Command -ComputerName JEA-DemoSVR -ScriptBlock { Get-PSSessionConfiguration | Select-Object name,permission }
@@ -75,7 +86,7 @@ whoami
 restart-computer
 Restart-Computer -force
 
-Enter-PSSession -ComputerName JEA-DEMOSVR -Credential 'jeademo\jea.user' -ConfigurationName BSidesDemo
+
 
 
 
