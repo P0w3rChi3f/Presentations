@@ -1,5 +1,5 @@
 ﻿New-Item -Path c:/ -ItemType Directory -Name Demo
-cd C:/Demo
+Set-Location C:/Demo
 #Discover Commands
 code './PowerShell/PowerShell Crash Course/DemoScripts/Discovering Commands.ps1'
 
