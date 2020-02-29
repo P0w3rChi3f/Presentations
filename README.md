@@ -1,6 +1,6 @@
 # Presentation Abstracts
 
-## [PowerShell JEA]((https://github.com/P0w3rChi3f/Presentations/tree/master/PowerShell/JEA-Just-Enough-Admin))
+## [PowerShell JEA](https://github.com/P0w3rChi3f/Presentations/tree/master/PowerShell/JEA-Just-Enough-Admin)
 
 **Presentaion Level:** Intermediate  
 **Estimated Time:** 60 min  
