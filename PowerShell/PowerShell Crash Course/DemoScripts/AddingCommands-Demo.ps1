@@ -15,5 +15,5 @@ Get-help get-vmhost
 
 $env:psmodulepath
 
-get-module -ListAvailable VM* | foreach ($_.name) { install-Module -Name $_.Name}
-get-module -ListAvailable VM* | foreach ($_.name) { Uninstall-Module -Name $_.Name}
+get-module -ListAvailable VM* | ForEach-Object ($_.name) { install-Module -Name $_.Name}
+get-module -ListAvailable VM* | ForEach-Object ($_.name) { Uninstall-Module -Name $_.Name}
