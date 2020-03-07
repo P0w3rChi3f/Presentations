@@ -4,7 +4,7 @@ notepad.exe
 Get-Process -name Notepad | Stop-Process
 
 get-process | Out-GridView
- #export-csv c:\demo\processes.csv -NoTypeInformation -force
+export-csv c:\demo\processes.csv -NoTypeInformation -force
 .\processes.csv
 
 ###############################################################################################
@@ -14,9 +14,7 @@ $localName | Out-File .\servers.txt -Force
  
 .\servers.txt
 
-
 Get-help get-service –full
-
 
 Get-content .\servers.txt | Get-service (fail)
 Get-process -name note* | stop-process #(win)

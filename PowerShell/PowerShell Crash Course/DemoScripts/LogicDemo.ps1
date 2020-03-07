@@ -32,7 +32,7 @@ code C:\Scripts\PowerShell\Vmware\ViewVM-SetState.ps1
 
 #ForEach
 #
-$letters = "a","b","c","d“
+$letters = "a","b","c","d"
 foreach ($letter in $letters) {Write-Host $letter}
 #>
 

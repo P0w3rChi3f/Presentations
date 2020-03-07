@@ -1,2 +1,2 @@
 ﻿$x = 10
-Write $x
+Write-Output $x

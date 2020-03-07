@@ -1,9 +1,9 @@
 ﻿#Format-Table
     #-autosize (adjusts to column width)
-       Get-Process | select -last 15 | Format-Table
+       Get-Process | Select-Object -last 15 | Format-Table
 
-    #ii) -property (instead of piping to select)
-       Get-Process | select -last 15 | Format-Table -Property MachineName, ID, ProcessName, responding
+    #ii) -property (instead of piping to Select-Object)
+       Get-Process | Select-Object -last 15 | Format-Table -Property MachineName, ID, ProcessName, responding
 
     #iii) –groupBy
         Get-Service | Sort-Object Status | Format-Table -groupBy Status
@@ -28,19 +28,19 @@ Get-Service | Group-Object -Property Status | Sort-Object -Property Count -Desce
     ConvertTo-Json | Out-File .\Services.json
 
 #Custom Columns
-    Get-Process | select -first 5 | Format-Table -Property name,vm
-    Get-Process | select -first 5 | 
+    Get-Process | Select-Object -first 5 | Format-Table -Property name,vm
+    Get-Process | Select-Object -first 5 | 
         Format-Table Name,  @{name='VM(MB)';expression={$_.VM / 1MB -as [int]}} –autosize
 
 Code “C:\Scripts\PowerShell\Server\Uploaded to GitHub\Get-ServerRebootStatus.ps1”
 
 $userData = Import-Csv 'C:\Users\honey\Google Drive\Presentations\PowerShell\PowerShell Crash Course\UserData.csv'
 
-$userData | select -First 5 | 
+$userData | Select-Object -First 5 | 
     Format-Table -property ID, @{name='FName';expression={$_.first_name}}, 
     @{name='LName';expression={$_.last_name}}, email, gender
 
-$userData | select ID, @{name='FName';expression={$_.first_name}}, 
+$userData | Select-Object ID, @{name='FName';expression={$_.first_name}}, 
     @{name='LName';expression={$_.last_name}}, email, gender | 
     export-csv 'C:\demo\User.csv' -NoTypeInformation
 

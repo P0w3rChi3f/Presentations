@@ -16,7 +16,7 @@ enter-pssession DESKTOP-52INA1A -Credential $creds
 
 # Invoke-command
 Invoke-Command -computerName localhost, DESKTOP-52INA1A  -Credential $creds `
-    -command { Get-EventLog Security | where {$_.eventID -eq 4826}}
+    -command { Get-EventLog Security | Where-Object {$_.eventID -eq 4826}}
 
 # Sessions
 $sessions = New-PSSession -ComputerName localhost, DESKTOP-52INA1A -Credential $creds
@@ -25,8 +25,8 @@ Connect-PSSession
 Remove-PSSession
 
 Enter-PSSession -Session $sessions[0]
-Enter-PSSession -Session ($sessions |where { $_.computername -eq ‘localhost’ })
-Enter-PSSession -Session (Get-PSSession -ComputerName 'localhost’)
+Enter-PSSession -Session ($sessions |Where-Object { $_.computername -eq ‘localhost’ })
+Enter-PSSession -Session (Get-PSSession -ComputerName 'localhost')
 
 $s_server1,$s_server2 = new-pssession -computer localhost, DESKTOP-52INA1A -Credential $creds
 

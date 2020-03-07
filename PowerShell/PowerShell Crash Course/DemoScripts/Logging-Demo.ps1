@@ -1,6 +1,6 @@
 ﻿#Module Logging
 Get-WinEvent -LogName Microsoft-Windows-PowerShell/Operational | 
-    where {$_.Id -eq "4103"} | Format-List
+    Where-Object {$_.Id -eq "4103"} | Format-List
 
 
 #Test
@@ -13,8 +13,8 @@ New-ItemProperty HKLM:\SOFTWARE\Policies\Microsoft\Windows\PowerShell\ScriptBloc
 
 #demo
 Get-WinEvent -LogName Microsoft-Windows-PowerShell/Operational | 
-    where {$_.Id -eq "4104"} | 
-    select -first 5 | format-list
+    Where-Object {$_.Id -eq "4104"} | 
+    Select-Object -first 5 | format-list
 
 #Language Modes
 Disable-WindowsOptionalFeature -Online -FeatureName MicrosoftWindowsPowerShellV2
