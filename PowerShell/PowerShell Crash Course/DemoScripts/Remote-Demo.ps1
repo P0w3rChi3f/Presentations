@@ -54,3 +54,62 @@ Set-ItemProperty -Path HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\
     -Name LocalAccountTokenFilterPolicy -Value 0 -Type DWord
 Disable-NetFirewallRule -DisplayName 'Windows Remote Management (HTTP-In)' 
 Get-NetFirewallRule -DisplayName 'Windows Remote Management (HTTP-In)'
+
+#########################################################################################
+
+$creds = Get-Credential jeademo\jea.admin
+
+enter-pssession jea-demosvr -Credential $creds
+
+New-Item -ItemType Directory -Name Dir01 
+Remove-Item Dir01
+
+enter-pssession jea-dc -Credential $creds
+
+Invoke-Command -computerName jea-demosvr, jea-dc  -Credential $creds -command { Get-EventLog Security | Where-Object {$_.eventID -eq 4826}} | Group-Object pscomputername
+        4624 
+
+# Sessions
+$demosvrSession = New-PSSession -ComputerName jea-demosvr -Credential $creds
+$demosvrSession
+Enter-PSSession -Session $demosvrSession
+
+$comboSession = New-PSSession -ComputerName jea-demosvr -Credential $creds
+$Session = New-PSSession -ComputerName jea-demosvr -Credential $creds
+
+Get-PSSession
+Disconnect-PSSession -Id 3
+Disconnect-PSSession -Id 4
+
+Get-PSSession
+Connect-PSSession -id 3
+Get-PSSession
+
+$session = New-PSSession -ComputerName jea-demosvr, jea-dc -Credential $creds
+
+Disconnect-PSSession
+Connect-PSSession
+Remove-PSSession
+
+Enter-PSSession -Session $session[1]
+Enter-PSSession -Session ($session | Where-Object { $_.computername -eq ‘jea-dc’ })
+Enter-PSSession -Session (Get-PSSession -ComputerName 'jea-demosvr' -Credential $creds)
+
+
+
+$s_server1,$s_server2 = new-pssession -computer localhost, DESKTOP-52INA1A -Credential $creds
+
+Invoke-Command -Command { Get-WmiObject -Class win32_process } -Session $session | 
+    Format-Table -Property PSComputerName, processname, ProcessID, ParentProcessID
+
+invoke-command -command { get-wmiobject -class win32_process } -session $session | 
+    Select-Object ProcessName, PSComputerName, Path | Group-Object ProcessName | 
+    Sort-Object Count -Descending | Format-Table -AutoSize
+
+Invoke-Command -Session $session {new-item -Type Directory -Path c:\ -Name Temp}
+
+#Note !!!! at this point make a single session to demonstrate the copy-item without the for loop
+
+foreach ($item in $session) {Copy-Item -Path c:\temp\Sessions.txt -Destination c:\temp -ToSession $item}
+
+Invoke-Command -Session $session {remove-item -Path c:\Temp}
