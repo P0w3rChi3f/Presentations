@@ -29,7 +29,7 @@ ___
 **Presentaion Level:** Entry Level  
 **Estimated Time:** 30 min  
 
-This is a high level overvie of GIT and how it works.  This is a very basic overview with a demo to see how it works.
+This is a class I created for my Trilogy office hours.  It is a high level overview of GIT and how it works.  This is a very basic overview with a demo to see how it works.
 ___
 
 ## PowerShell Remoting with SSH  
