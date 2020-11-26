@@ -27,7 +27,8 @@ switch ($a)
 #>
 
 ######################################################################################
-code C:\Scripts\PowerShell\Vmware\ViewVM-SetState.ps1
+code "C:\Scripts\PowerShell\Get-IOCs.ps1"
+code "C:\Scripts\PowerShell\Vmware\ViewVM-SetState.ps1"
 ######################################################################################
 
 # ternary operator PWSH 7

@@ -21,7 +21,8 @@ $localServices | Out-File .\services.txt -Force
 Get-help get-service –full
 
 
-Get-content .\services.txt | Get-Service #(fail)
+Get-content .\servers.txt | Get-Service #(fail)
+Get-Service -ComputerName Desktop-62EO89A,localhost
 Get-process -name note* | stop-process #(win)
 
 
